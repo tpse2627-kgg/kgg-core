@@ -13,6 +13,32 @@ docs/
 
 The Django app lives in [kgg-django](https://github.com/tpse2627-kgg/kgg-django), the React UI in [kgg-frontend](https://github.com/tpse2627-kgg/kgg-frontend).
 
+## Setup and run
+
+Requires Python 3.11+ and Git.
+
+```
+git clone https://github.com/tpse2627-kgg/kgg-core.git
+cd kgg-core
+python -m venv .venv
+```
+
+Activate the virtual environment (in every new terminal):
+
+- Windows (PowerShell): `.venv\Scripts\Activate.ps1`
+- Linux/macOS: `source .venv/bin/activate`
+
+Install the core package in editable mode with the dev tools and run the tests:
+
+```
+pip install -e "core/[dev]"
+pytest
+```
+
+`pytest` should report `1 passed`, and
+`python -c "from kgg_core import health; print(health())"` prints `ok`.
+If `kgg_core` cannot be imported, check that `(.venv)` is shown in the prompt.
+
 ## Branching
 
 We use [git-flow](https://nvie.com/posts/a-successful-git-branching-model/) (to be confirmed by the team):
