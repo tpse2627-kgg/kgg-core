@@ -20,7 +20,7 @@ Requires Python 3.11+ and Git.
 ```
 git clone https://github.com/tpse2627-kgg/kgg-core.git
 cd kgg-core
-python -m venv .venv
+python3 -m venv .venv          # Windows: python -m venv .venv
 ```
 
 Activate the virtual environment (in every new terminal):
