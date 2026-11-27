@@ -19,3 +19,7 @@ Discord serves as the primary communication channel between the client (Chair of
 **Primary contact:** Surkhabjit Singh (surkhabjit.singh@stud.tu-darmstadt.de)
 
 **Response time:** We answer enquiries sent to the primary contact or posted on Discord within one business day where possible, and at the latest within two business days. In return, we ask the client to respond to our enquiries within three business days.
+
+### AI Usage
+
+We used AI tools to improve the language of this document, in particular its phrasing, grammar and spelling. We also asked them for feedback to find weaknesses in our text. All ideas and content come from the team, and we wrote the drafts ourselves.
