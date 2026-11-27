@@ -7,10 +7,14 @@ name = "kgg-core"
 version = "0.1.0"
 description = "Python core of the Knowledge Graph Generator"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["rdflib>=7,<8"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "ruff"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]

@@ -35,7 +35,7 @@ pip install -e "core/[dev]"
 pytest
 ```
 
-`pytest` should report `1 passed`, and
+`pytest` should report all tests as passed, and
 `python -c "from kgg_core import health; print(health())"` prints `ok`.
 If `kgg_core` cannot be imported, check that `(.venv)` is shown in the prompt.
 
