@@ -32,4 +32,5 @@ kgg-core needs to store triples without knowing where they live. Tests need a fa
 
 - Swapping the store doesn't change the core logic, and kgg-core stays free of Django and pyoxigraph.
 - `apply` in the base class is not atomic. If a store fails between removing and adding, the graph is half changed. That's acceptable for the in-memory store; the pyoxigraph store must override it.
+- **The graph write and the history entry are not atomic yet.** #19 decides where the history of changesets lives. Until then, a crash between the two, or two Django workers writing at the same time, can leave the graph and its history out of step. If it is needed, a `transaction()` method can be added later without breaking existing callers.
 - No SPARQL, named graphs or transactions in the interface yet. They can be added when the REST API or LDES needs them.
