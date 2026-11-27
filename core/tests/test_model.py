@@ -165,3 +165,12 @@ def test_changeset_is_immutable_and_hashable():
     with pytest.raises(FrozenInstanceError):
         changeset.author = "b"
     assert changeset in {changeset}
+
+
+@pytest.mark.parametrize(
+    ("author", "timestamp"),
+    [(None, datetime.now(UTC)), (42, datetime.now(UTC)), ("a", "2026-11-26"), ("a", None)],
+)
+def test_author_and_timestamp_types_are_checked(author, timestamp):
+    with pytest.raises(TypeError):
+        Changeset(uuid.uuid4(), [], [], author, timestamp)

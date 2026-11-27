@@ -27,6 +27,7 @@ Object = URIRef | Literal
 _IRI_SCHEME = re.compile(r"[A-Za-z][A-Za-z0-9+.-]*:")
 # ... and contains none of the characters RFC 3987 excludes. rdflib accepts
 # them with a warning, but pyoxigraph rejects them, so we reject them up front.
+# shortcut: not a full IRI parser (e.g. "http://[bad" passes), add one if bad IRIs reach a store.
 _IRI_FORBIDDEN = re.compile(r'[\x00-\x20<>"{}|^`\\]')
 
 
@@ -66,9 +67,8 @@ class Triple:
         if isinstance(self.object, URIRef):
             _check_iri(self.object, "object")
         elif not isinstance(self.object, Literal):
-            raise TypeError(
-                f"object must be a URIRef or Literal, got {type(self.object).__name__}: {self.object!r}"
-            )
+            kind = type(self.object).__name__
+            raise TypeError(f"object must be a URIRef or Literal, got {kind}: {self.object!r}")
 
     @classmethod
     def from_tuple(cls, terms: tuple[object, object, object]) -> Triple:
@@ -108,7 +108,8 @@ class Changeset:
 
     Raises:
         TypeError: if ``added`` or ``removed`` contains something other than
-            a :class:`Triple`, or ``id`` is not a :class:`uuid.UUID`.
+            a :class:`Triple`, or ``id``, ``author`` or ``timestamp`` has the
+            wrong type.
         ValueError: if a triple is both added and removed, ``author`` is
             empty, or ``timestamp`` has no timezone.
     """
@@ -136,8 +137,12 @@ class Changeset:
             raise ValueError(f"triples cannot be both added and removed: {listed}")
         if not isinstance(self.id, uuid.UUID):
             raise TypeError(f"id must be a UUID, got {type(self.id).__name__}")
-        if not self.author or not self.author.strip():
+        if not isinstance(self.author, str):
+            raise TypeError(f"author must be a str, got {type(self.author).__name__}")
+        if not self.author.strip():
             raise ValueError("author must not be empty")
+        if not isinstance(self.timestamp, datetime):
+            raise TypeError(f"timestamp must be a datetime, got {type(self.timestamp).__name__}")
         if self.timestamp.tzinfo is None or self.timestamp.utcoffset() is None:
             raise ValueError("timestamp must be timezone-aware")
 
@@ -157,8 +162,8 @@ class Changeset:
         """Make a new changeset with a fresh id and the current time as timestamp."""
         return cls(
             id=uuid.uuid4(),
-            added=frozenset(added),
-            removed=frozenset(removed),
+            added=added,
+            removed=removed,
             author=author,
             timestamp=datetime.now(UTC),
             source=source,

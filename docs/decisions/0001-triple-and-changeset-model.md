@@ -15,7 +15,7 @@ Both types live in `kgg_core/model.py` and use rdflib terms.
 - The subject and the predicate are `URIRef`s. The object is a `URIRef` or a `Literal`.
 - **Blank nodes are rejected.** They have no stable identity, so a client could not edit or delete them over the API, and pyoxigraph renames them. Data that contains blank nodes (OWL restrictions, RDF lists) will be skolemised when it comes in: each blank node is replaced by a generated IRI (rdflib `Graph.skolemize()`, `/.well-known/genid/…`). That is a separate, later issue.
 - **Plain strings are rejected**, because `"Alice"` could mean an IRI or a literal.
-- **IRIs are checked.** An IRI needs a scheme and must not contain whitespace or `<>"{}|^`\`. rdflib only warns about these characters, but pyoxigraph rejects them. Checking up front means the in-memory store never accepts a triple that the real store would refuse.
+- **IRIs are checked.** An IRI needs a scheme and must not contain whitespace or `<>"{}|^`\`. rdflib only warns about these characters, but pyoxigraph rejects them. Checking up front catches the common cases in the in-memory store too. It is not a full IRI parser: pyoxigraph still rejects a few IRIs we accept, such as `http://[bad` or a broken `%` escape.
 - `as_tuple()` and `from_tuple()` convert to and from rdflib's `(s, p, o)` tuples.
 
 **`Changeset`** is a frozen dataclass with these fields:
