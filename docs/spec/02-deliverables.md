@@ -18,4 +18,4 @@
 
 **Minimum scope.** The client named storing, reading, editing, updating and versioning triples as the main focus. The project is passed when the client's backend can send triples over the REST API, the KGG stores them in a local database, they can be read, edited and updated over the API, and every change is recorded as a version with Linked Data Event Streams (LDES). A reviewer can also accept or reject triples marked as unclear in the web frontend. A graph visualisation and Neo4j compatibility are not required but desirable.
 
-**Use of AI.** The client allows us to generate code with AI if it is reviewed and the team understands it. Commits made with AI name it as co-author, and every code change states its reason in the commit message.
+**Use of AI.** The client allows us to generate code with AI if it is reviewed and the team understands it. Commits made with AI name it as co-author, and every code change states its reason in the commit body.
